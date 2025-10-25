@@ -1,13 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateServiceDto } from './dto/create-service.dto';
-import { UpdateServiceDto } from './dto/update-service.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class ServiceTagServicesService { // ? naming sucks
-  constructor(
-    private readonly prisma: PrismaService
-  ) {}
+export class ServiceTagServicesService {
+  // ? naming sucks
+  constructor(private readonly prisma: PrismaService) {}
   async create(serviceTagId: number, createServiceDto: CreateServiceDto) {
     const serviceTag = await this.prisma.block.findUnique({
       where: { id: serviceTagId },
@@ -26,5 +24,4 @@ export class ServiceTagServicesService { // ? naming sucks
       orderBy: { id: 'desc' },
     });
   }
-
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ServicesService } from './services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
@@ -13,7 +13,6 @@ export class ServicesController {
   @ApiOperation({
     summary: 'Список услуг',
   })
-  @ApiBody({ type: CreateServiceDto })
   findAll() {
     return this.servicesService.findAll();
   }
