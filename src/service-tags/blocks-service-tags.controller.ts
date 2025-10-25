@@ -6,19 +6,23 @@ import {
   Param,
   ParseIntPipe,
 } from '@nestjs/common';
-import { CreateServiceTagDto } from 'src/service-tags/dto/create-service-tag.dto';
+import { CreateServiceTagDto } from './dto/create-service-tag.dto';
 import {
   ApiBody,
   ApiCreatedResponse,
   ApiOperation,
   ApiParam,
   ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
-import { ServiceTagsService } from './service-tags.service';
+import { BlockServiceTagsService } from './blocks-service-tags.service';
 
 @Controller('blocks/:blockId/service-tags')
-export class ServiceTagsController {
-  constructor(private readonly serviceTagsService: ServiceTagsService) {}
+@ApiTags('ServiceTags')
+export class BlockServiceTagsController {
+  constructor(
+    private readonly blockServiceTagsService: BlockServiceTagsService,
+  ) {}
 
   @Post()
   @ApiParam({ name: 'blockId', type: Number })
@@ -36,7 +40,7 @@ export class ServiceTagsController {
     @Param('blockId', ParseIntPipe) blockId: number,
     @Body() createServiceTagDto: CreateServiceTagDto,
   ) {
-    return this.serviceTagsService.create(blockId, createServiceTagDto);
+    return this.blockServiceTagsService.create(blockId, createServiceTagDto);
   }
 
   @Get()
@@ -50,6 +54,6 @@ export class ServiceTagsController {
   })
   @ApiParam({ name: 'blockId', type: Number })
   findAll(@Param('blockId', ParseIntPipe) blockId: number) {
-    return this.serviceTagsService.findAll(blockId);
+    return this.blockServiceTagsService.findAll(blockId);
   }
 }

@@ -12,6 +12,6 @@ export class CreateBlockDto {
     description: `Тип блока. "CONTENT" - блок с информацией/посты "SERVICE" - блок с услугами`,
   })
   @IsOptional()
-  @IsEnum($Enums.Kind)
-  kind?: $Enums.Kind;
+  @IsEnum($Enums.BlockKind)
+  kind?: $Enums.BlockKind;
 }
