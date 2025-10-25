@@ -8,8 +8,10 @@ async function bootstrap() {
     .setTitle('Plat.info')
     .setDescription('The Plat API description')
     .setVersion('1.0')
-    .addTag('Services')
+    .addTag('System')
+    .addTag('Blocks')
     .addTag('ServiceTags')
+    .addTag('Services')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
