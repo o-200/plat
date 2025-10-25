@@ -9,11 +9,11 @@ export class AppController {
   @Get('health')
   @ApiOperation({
     summary: 'Проверки работоспособности сервиса.',
-    description:
-      `Тестовый endpoint для проверки работы сервиса. Всегда возвращает 200 ОК и тело "Hello, World!"`,
-    })
+    description: `Тестовый endpoint для проверки работы сервиса`,
+  })
   @ApiResponse({
-    type: "Hello, World!",
+    status: 200,
+    description: 'Всегда возвращает 200 ОК и тело "Hello, World!"',
   })
   getHello(): string {
     return this.appService.getHello();

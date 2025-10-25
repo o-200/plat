@@ -32,7 +32,6 @@ export class BlocksController {
   @ApiBody({ type: CreateBlockDto })
   @ApiCreatedResponse({
     type: CreateBlockDto,
-    isArray: true,
   })
   create(@Body() createBlockDto: CreateBlockDto) {
     return this.blocksService.create(createBlockDto);
@@ -70,6 +69,9 @@ export class BlocksController {
   }
 
   @Delete(':id')
+  @ApiOperation({
+    summary: 'Удаление тега',
+  })
   remove(@Param('id') id: string) {
     return this.blocksService.remove(+id);
   }
