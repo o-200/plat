@@ -47,7 +47,6 @@ export class BlockServiceTagsController {
   @ApiOperation({
     summary: 'Список тегов по блоку',
   })
-  @ApiBody({ type: CreateServiceTagDto })
   @ApiResponse({
     type: CreateServiceTagDto,
     isArray: true,

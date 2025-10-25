@@ -43,7 +43,6 @@ export class BlocksController {
   @ApiOperation({
     summary: 'Список блоков',
   })
-  @ApiBody({ type: CreateBlockDto })
   @ApiResponse({
     type: CreateBlockDto,
     isArray: true,
@@ -56,7 +55,6 @@ export class BlocksController {
   @ApiOperation({
     summary: 'Поиск блока по ID',
   })
-  @ApiBody({ type: CreateBlockDto })
   @ApiResponse({ type: CreateBlockDto })
   findOne(@Param('id') id: string) {
     return this.blocksService.findOne(+id);

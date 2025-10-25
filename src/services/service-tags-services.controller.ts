@@ -1,12 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ServicesService } from './services.service';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { CreateServiceDto } from 'src/services/dto/create-service.dto';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ServiceTagServicesService } from './service-tags-services.service';
 
 @Controller('service-tags/:serviceTagId/services')
 @ApiTags('Services')
 export class ServiceTagsServicesController {
-  constructor(private readonly servicesService: ServicesService) {}
+  constructor(private readonly serviceTagsServicesService: ServiceTagServicesService) {}
 
   @Post()
   @ApiOperation({
@@ -16,20 +16,23 @@ export class ServiceTagsServicesController {
   @ApiResponse({
     type: CreateServiceDto,
   })
-  create(@Body() createServiceDto: CreateServiceDto) {
-    return this.servicesService.create(createServiceDto);
+  create(
+    @Param('serviceTagId', ParseIntPipe) serviceTagId: number,
+    @Body() createServiceDto: CreateServiceDto
+  ){
+    return this.serviceTagsServicesService.create(serviceTagId, createServiceDto);
   }
 
   @Get()
   @ApiOperation({
     summary: 'Поиск услуг по тегу',
   })
-  @ApiBody({ type: CreateServiceDto })
   @ApiResponse({
     type: CreateServiceDto,
     isArray: true
   })
-  findAll() {
-    return this.servicesService.findAll();
+  @ApiParam({ name: 'serviceTagId', type: Number })
+  findAll(serviceTagId: number) {
+    return this.serviceTagsServicesService.findAll(serviceTagId);
   }
 }

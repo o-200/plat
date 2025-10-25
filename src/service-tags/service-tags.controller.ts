@@ -12,10 +12,8 @@ export class ServiceTagsController {
   @ApiOperation({
     summary: 'Поиск тега по идентификатору',
   })
-  @ApiBody({ type: UpdateServiceTagDto })
   @ApiResponse({
     type: UpdateServiceTagDto,
-    isArray: true,
   })
   findOne(@Param('id') id: string) {
     return this.serviceTagsService.findOne(+id);

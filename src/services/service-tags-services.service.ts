@@ -1,26 +1,30 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ServiceTagServicesService { // ? naming sucks
-  create(createServiceDto: CreateServiceDto) {
-    return 'This action adds a new service';
+  constructor(
+    private readonly prisma: PrismaService
+  ) {}
+  async create(serviceTagId: number, createServiceDto: CreateServiceDto) {
+    const serviceTag = await this.prisma.block.findUnique({
+      where: { id: serviceTagId },
+      select: { id: true },
+    });
+    if (!serviceTag) throw new NotFoundException('Service Tag not found');
+
+    return await this.prisma.service.create({
+      data: { ...createServiceDto, serviceTagId },
+    });
   }
 
-  findAll() {
-    return `This action returns all services`;
+  findAll(serviceTagId: number) {
+    return this.prisma.service.findMany({
+      where: { id: serviceTagId },
+      orderBy: { id: 'desc' },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} service`;
-  }
-
-  update(id: number, updateServiceDto: UpdateServiceDto) {
-    return `This action updates a #${id} service`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} service`;
-  }
 }
