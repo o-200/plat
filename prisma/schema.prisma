@@ -11,36 +11,40 @@ model Block {
   id          Int          @id @default(autoincrement())
   title       String
   kind        BlockKind    @default(CONTENT)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
   serviceTags ServiceTag[]
-}
 
-enum BlockKind {
-  CONTENT
-  SERVICE
+  @@map("blocks")
 }
 
 model Service {
-  id        Int     @id @default(autoincrement())
-  title     String
-  published Boolean @default(true)
-
-  serviceTagId Int
+  id           Int        @id @default(autoincrement())
+  title        String
+  serviceTagId Int        @map("service_tag_id")
   serviceTag   ServiceTag @relation(fields: [serviceTagId], references: [id], onDelete: Cascade)
 
   @@index([serviceTagId])
+  @@map("services")
 }
 
 model ServiceTag {
   id        Int     @id @default(autoincrement())
   title     String
-  published Boolean @default(true)
+  imageLink String? @map("image_link")
 
   services Service[]
 
-  blockId Int
+  blockId Int   @map("block_id")
   block   Block @relation(fields: [blockId], references: [id], onDelete: Cascade)
 
   @@index([blockId])
+  @@map("service_tags")
+}
+
+enum BlockKind {
+  CONTENT @map("content")
+  SERVICE @map("service")
+
+  @@map("block_kind")
 }
