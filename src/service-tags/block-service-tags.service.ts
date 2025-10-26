@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateServiceTagDto } from './dto/create-service-tag.dto';
 import { UpdateServiceTagDto } from './dto/update-service-tag.dto';
 import { PrismaService } from '../prisma/prisma.service'; // relative to avoid alias issues
+import { BlockKind } from '@prisma/client';
 
 @Injectable()
 export class BlockServiceTagsService {
@@ -9,10 +10,11 @@ export class BlockServiceTagsService {
 
   async create(blockId: number, createServiceTagDto: CreateServiceTagDto) {
     const block = await this.prisma.block.findUnique({
-      where: { id: blockId },
-      select: { id: true },
+      where: { id: blockId }
     });
+
     if (!block) throw new NotFoundException('Block not found');
+    if (block.kind !== BlockKind.SERVICE) throw new BadRequestException('Block is not SERVICE');
 
     return await this.prisma.serviceTag.create({
       data: { ...createServiceTagDto, blockId },
