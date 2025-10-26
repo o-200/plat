@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class CreateServiceTagDto {
   @ApiProperty({
@@ -9,4 +9,12 @@ export class CreateServiceTagDto {
   @IsString()
   @IsNotEmpty()
   title!: string;
+
+  @ApiProperty({
+    description: 'Ссылка на изображение',
+  })
+  @IsUrl()
+  @IsOptional()
+  @IsNotEmpty()
+  imageLink: string;
 }
