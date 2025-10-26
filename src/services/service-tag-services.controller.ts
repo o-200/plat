@@ -14,7 +14,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { ServiceTagServicesService } from './service-tags-services.service';
+import { ServiceTagServicesService } from './service-tag-services.service';
 
 @Controller('service-tags/:serviceTagId/services')
 @ApiTags('Services')

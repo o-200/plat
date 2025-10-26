@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ServiceTagsService } from './service-tags.service';
 import { ServiceTagsController } from './service-tags.controller';
-import { BlockServiceTagsController } from './blocks-service-tags.controller';
-import { BlockServiceTagsService } from './blocks-service-tags.service';
+import { BlockServiceTagsController } from './block-service-tags.controller';
+import { BlockServiceTagsService } from './block-service-tags.service';
 
 @Module({
   controllers: [ServiceTagsController, BlockServiceTagsController],

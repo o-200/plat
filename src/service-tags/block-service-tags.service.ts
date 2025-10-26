@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateServiceTagDto } from './dto/create-service-tag.dto';
 import { UpdateServiceTagDto } from './dto/update-service-tag.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service'; // relative to avoid alias issues
 
 @Injectable()
 export class BlockServiceTagsService {

@@ -15,7 +15,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { BlockServiceTagsService } from './blocks-service-tags.service';
+import { BlockServiceTagsService } from './block-service-tags.service';
 
 @Controller('blocks/:blockId/service-tags')
 @ApiTags('ServiceTags')
@@ -26,7 +26,6 @@ export class BlockServiceTagsController {
 
   @Post()
   @ApiParam({ name: 'blockId', type: Number })
-  @Post()
   @ApiOperation({
     summary: 'Создание тега сервиса.',
     description: `Создание тега для сервиса, являясь общим названием для списка услуг. Пример - Дом и ЖКУ, Связь и телефоны;

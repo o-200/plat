@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UpdateServiceTagDto } from './dto/update-service-tag.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service'; // relative to avoid alias issues
 
 @Injectable()
 export class ServiceTagsService {
