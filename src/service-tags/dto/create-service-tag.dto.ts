@@ -17,4 +17,10 @@ export class CreateServiceTagDto {
   @IsOptional()
   @IsNotEmpty()
   imageLink: string;
+
+  @ApiProperty({
+    description: 'Идентификатор Блока',
+  })
+  @IsNotEmpty()
+  blockId: number;
 }

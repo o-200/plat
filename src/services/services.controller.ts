@@ -1,4 +1,4 @@
-import { Controller, Get, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Delete, Post, Query, ParseIntPipe } from '@nestjs/common';
 import { ServicesService } from './services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
@@ -17,6 +17,20 @@ export class ServicesController {
     return this.servicesService.findAll();
   }
 
+  @Get()
+  @ApiOperation({
+    summary: 'Поиск услуг по тегу',
+  })
+  @ApiResponse({
+    type: CreateServiceDto,
+    isArray: true,
+  })
+  findByServiceTag(
+    @Query('blockId', ParseIntPipe) serviceTagId: number
+  ) {
+    return this.servicesService.findByServiceTag(serviceTagId);
+  }
+
   @Get(':id')
   @ApiOperation({
     summary: 'Поиск услуги по идентификатору',
@@ -26,6 +40,21 @@ export class ServicesController {
   })
   findOne(@Param('id') id: string) {
     return this.servicesService.findOne(+id);
+  }
+
+  @Post()
+  @ApiOperation({
+    summary: 'Создание услуги',
+    description: 'Тип услуги. Пополнение баланса, показания счётчиков..'
+  })
+  @ApiBody({ type: CreateServiceDto })
+  @ApiResponse({
+    type: CreateServiceDto,
+  })
+  create(@Body() createServiceDto: CreateServiceDto) {
+    return this.servicesService.create(
+      createServiceDto,
+    );
   }
 
   @Patch(':id')
