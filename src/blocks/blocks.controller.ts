@@ -6,11 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  ValidationPipe,
 } from '@nestjs/common';
 import { BlocksService } from './blocks.service';
 import { CreateBlockDto } from './dto/create-block.dto';
 import { UpdateBlockDto } from './dto/update-block.dto';
 import {
+  ApiBadRequestResponse,
   ApiBody,
   ApiCreatedResponse,
   ApiOperation,
@@ -32,10 +34,12 @@ export class BlocksController {
     `,
   })
   @ApiBody({ type: CreateBlockDto })
-  @ApiCreatedResponse({
-    type: CreateBlockDto,
-  })
-  create(@Body() createBlockDto: CreateBlockDto) {
+  @ApiCreatedResponse({ type: CreateBlockDto })
+  @ApiBadRequestResponse({ description: 'Не правильные параметры' })
+  create(
+    @Body(new ValidationPipe({ transform: true, whitelist: true }))
+    createBlockDto: CreateBlockDto,
+  ) {
     return this.blocksService.create(createBlockDto);
   }
 
