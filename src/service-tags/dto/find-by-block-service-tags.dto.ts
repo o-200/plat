@@ -1,10 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { IsInt, IsOptional } from 'class-validator';
 
-export class FindByBlockServiceTagsDto {
-  @ApiProperty({
-    description: 'Идентификатор Блока',
-  })
-  @IsNotEmpty()
-  blockId: number;
+export class FindServiceTagsDto {
+  @ApiPropertyOptional({ type: Number, description: 'Идентификатор блока' })
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  blockId?: number;
 }

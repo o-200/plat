@@ -1,9 +1,9 @@
-import { Controller, Body, Patch, Param, Delete, Get, Post, ParseIntPipe, Query } from '@nestjs/common';
+import { Controller, Body, Patch, Param, Delete, Get, Post, ParseIntPipe, Query, ValidationPipe } from '@nestjs/common';
 import { ServiceTagsService } from './service-tags.service';
 import { UpdateServiceTagDto } from './dto/update-service-tag.dto';
-import { ApiBody, ApiCreatedResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiCreatedResponse, ApiNotFoundResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateServiceTagDto } from './dto/create-service-tag.dto';
-import { FindByBlockServiceTagsDto } from './dto/find-by-block-service-tags.dto';
+import { FindServiceTagsDto } from './dto/find-by-block-service-tags.dto';
 
 @Controller('service-tags')
 @ApiTags('ServiceTags')
@@ -11,18 +11,16 @@ export class ServiceTagsController {
   constructor(private readonly serviceTagsService: ServiceTagsService) {}
 
   @Get()
-  @ApiOperation({
-    summary: 'Список тегов по блоку',
-  })
-  @ApiQuery({ name: 'blockId', type: Number, required: true })
-  @ApiResponse({
-    type: CreateServiceTagDto,
-    isArray: true,
-  })
-
-  findAll(@Query('blockId', ParseIntPipe) blockId: number) {
-    return this.serviceTagsService.findByBlock(blockId);
+  @ApiOperation({ summary: 'Список тегов' })
+  @ApiResponse({ type: CreateServiceTagDto, isArray: true })
+  @ApiNotFoundResponse({ description: 'No service tags' })
+  findAll(
+    @Query(new ValidationPipe({ transform: true, whitelist: true }))
+    query: FindServiceTagsDto,
+  ) {
+    return this.serviceTagsService.findAll(query);
   }
+
 
   @Get(':id')
   @ApiOperation({
