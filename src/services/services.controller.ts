@@ -26,7 +26,7 @@ export class ServicesController {
     isArray: true,
   })
   findByServiceTag(
-    @Query('blockId', ParseIntPipe) serviceTagId: number
+    @Query('serviceTagId', ParseIntPipe) serviceTagId: number
   ) {
     return this.servicesService.findByServiceTag(serviceTagId);
   }
