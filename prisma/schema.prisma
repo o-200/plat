@@ -32,6 +32,7 @@ model Service {
 model ServiceTag {
   id        Int       @id @default(autoincrement())
   title     String
+  priority  Int       @default(autoincrement())
   imageLink String?   @map("image_link")
   blockId   Int       @map("block_id")
   block     Block     @relation(fields: [blockId], references: [id], onDelete: Cascade)
