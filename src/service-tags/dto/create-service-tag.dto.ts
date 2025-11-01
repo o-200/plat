@@ -28,9 +28,10 @@ export class CreateServiceTagDto {
   imageLink: string;
 
   @ApiProperty({
-    description: `Номер приоритета. Необходимо для показа блоков (GET запросы) исходя из этого поля. Чем меньше значение - тем больше приоритет.
+    description: `Номер приоритета. Необходимо для показа (GET запросы) исходя из этого поля. Чем меньше значение - тем больше приоритет.
     Если не заполнено - присуждается автоматически низший приоритет.
     `,
+    minimum: 1
   })
   @IsOptional()
   @IsNumber()
@@ -41,6 +42,7 @@ export class CreateServiceTagDto {
 
   @ApiProperty({
     description: 'Идентификатор Блока',
+    minimum: 1
   })
   @IsNotEmpty()
   @IsInt()
