@@ -3,7 +3,8 @@ import { ServiceTagsService } from './service-tags.service';
 import { UpdateServiceTagDto } from './dto/update-service-tag.dto';
 import { ApiBody, ApiCreatedResponse, ApiNotFoundResponse, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateServiceTagDto } from './dto/create-service-tag.dto';
-import { FindAllServiceTagsDto, OrderEnum } from './dto/find-all-service-tags.dto';
+import { FindAllByServiceTagDto } from 'src/services/dto/find-all-by-service-tag.dto';
+import { OrderEnum } from './dto/find-all-service-tags.dto';
 
 @Controller('service-tags')
 @ApiTags('ServiceTags')
@@ -16,12 +17,12 @@ export class ServiceTagsController {
     name: 'priority',
     required: false,
     enum: OrderEnum,
-    description: 'Сортировка по приоритету.',
+    description: 'Сортировка по приоритету.'
   })
   @ApiResponse({ type: CreateServiceTagDto, isArray: true })
   @ApiNotFoundResponse({ description: 'No service tags' })
   findAll(
-    @Query() query: FindAllServiceTagsDto,
+    @Query() query: FindAllByServiceTagDto,
   ) {
     return this.serviceTagsService.findAll(query);
   }
